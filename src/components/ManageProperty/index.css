@@ -1,0 +1,15 @@
+.manage-property {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#typeofproperty {
+  margin-left: 15px;
+}
+.type-category {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+}

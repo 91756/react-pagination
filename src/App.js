@@ -1,62 +1,21 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
+import './App.css'
+import Header from './components/Header'
+import Home from './components/Home.js'
+import ManageProperty from './components/ManageProperty'
+import Login from './components/Login'
+import ProtectedRoute from './components/ProtectedRoute'
 
-const App = () => {
-  const [data, setData] = useState([])
-  const [noPages, setPages] = useState(10)
-  const [cp, setPage] = useState(1)
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/login" component={Login} />
+      <ProtectedRoute exact path="/" component={Home} />
+      <ProtectedRoute exact path="/rent" component={Home} />
+      <ProtectedRoute exact path="/buy" component={Home} />
+      <ProtectedRoute exact path="/sell" component={Home} />
+    </Switch>
+  </BrowserRouter>
+)
 
-  /* const noOfPages = Math.ceil(data.length / noPages)
-  const pages = [...Array(noOfPages + 1).keys()].splice(1) */
-
-  const noOfPages = Math.ceil(data.length / noPages)
-  const pages = [...Array(noOfPages + 1).keys()].splice(1)
-
-  const last = cp * noPages
-  const first = last - noPages
-  const pa = data.slice(first, last)
-
-  console.log(pa)
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/todos/').then(resp => {
-      console.log(resp)
-      return setData(resp.data)
-    })
-  }, [])
-
-  const onChange = n => {
-    setPage(n)
-  }
-
-  const onPreveChanage = () => {
-    if (cp !== 1) {
-      setPage(cp - 1)
-    }
-  }
-
-  return (
-    <div>
-      <h1>Krishna Supriya</h1>
-      {pa.map(item => (
-        <p key={item.id}> {item.title}</p>
-      ))}
-      <h1>Pagination</h1>
-      <span>
-        <button type="button" onClick={() => onPreveChanage()}>
-          Prev
-        </button>
-      </span>
-      {pages.map(page => (
-        <span key={page}>
-          <button type="button" onClick={() => onChange(page)}>
-            {`| ${page} |`}
-          </button>
-        </span>
-      ))}
-      <span>
-        <button type="button">Next</button>
-      </span>
-    </div>
-  )
-}
 export default App
